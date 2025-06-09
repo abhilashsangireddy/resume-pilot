@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Pilot</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Toast Container -->
+    <div class="toast-container"></div>
+
+    <div id="auth-container" class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <!-- Login Form -->
+                <div id="login-form" class="card auth-card">
+                    <h2 class="text-center mb-4">Welcome Back</h2>
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="loginIdentifier" class="form-label">Username or Email</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                <input type="text" class="form-control" id="loginIdentifier" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                <input type="password" class="form-control" id="loginPassword" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                    </form>
+                    <p class="text-center mt-3">
+                        Don't have an account? <a href="#" id="showRegister">Register here</a>
+                    </p>
+                </div>
+
+                <!-- Register Form -->
+                <div id="register-form" class="card auth-card" style="display: none;">
+                    <h2 class="text-center mb-4">Create Account</h2>
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <label for="registerUsername" class="form-label">Username</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                <input type="text" class="form-control" id="registerUsername" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerEmail" class="form-label">Email</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                <input type="email" class="form-control" id="registerEmail" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerPassword" class="form-label">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                <input type="password" class="form-control" id="registerPassword" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Register</button>
+                    </form>
+                    <p class="text-center mt-3">
+                        Already have an account? <a href="#" id="showLogin">Login here</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" style="display: none;">
+        <!-- Vertical Navigation -->
+        <nav class="vertical-nav">
+            <button class="toggle-nav">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            
+            <!-- User Profile -->
+            <div class="user-profile">
+                <i class="fas fa-user-circle"></i>
+                <span class="nav-text" id="userDisplayName">User</span>
+            </div>
+
+            <!-- Navigation Links -->
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="myFilesLink">
+                        <i class="fas fa-folder"></i>
+                        <span class="nav-text">My Files</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="templatesLink">
+                        <i class="fas fa-file-alt"></i>
+                        <span class="nav-text">Templates</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="resumeBuilderLink">
+                        <i class="fas fa-pencil-alt"></i>
+                        <span class="nav-text">Resume Builder</span>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Logout Button -->
+            <div class="nav-bottom">
+                <a class="nav-link" href="#" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="nav-text">Logout</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div id="myFiles" class="dashboard-section">
+                <h2>My Files</h2>
+                
+                <!-- Upload Section - Full Width -->
+                <div class="card p-3 mb-4">
+                    <form id="uploadForm" class="row g-3 align-items-end">
+                        <div class="col-md-6">
+                            <label for="fileInput" class="form-label">Upload File (Max 10MB)</label>
+                            <input type="file" class="form-control" id="fileInput" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="fileTags" class="form-label">Tag (Optional)</label>
+                            <select class="form-select" id="fileTags">
+                                <option value="">Select a tag</option>
+                                <option value="resume">Resume</option>
+                                <option value="cover-letter">Cover Letter</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <span class="upload-text">Upload</span>
+                                <div class="upload-progress d-none">
+                                    <div class="spinner-border spinner-border-sm" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                    <span class="progress-text ms-2">0%</span>
+                                </div>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Horizontal Divider -->
+                <hr class="mb-4">
+
+                <!-- Search and Filter Section -->
+                <div class="row mb-4">
+                    <div class="col-md-8">
+                        <div class="search-box">
+                            <label for="searchInput" class="form-label">Search Files</label>
+                            <input type="text" class="form-control" id="searchInput" placeholder="Search by filename...">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="filter-box">
+                            <label for="filterTags" class="form-label">Filter by Tag</label>
+                            <select class="form-select" id="filterTags">
+                                <option value="">All Files</option>
+                                <option value="resume">Resume</option>
+                                <option value="cover-letter">Cover Letter</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Files List -->
+                <div class="files-list">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="sortable" data-sort="name">File Name <i class="fas fa-sort"></i></th>
+                                    <th class="sortable" data-sort="size">Size <i class="fas fa-sort"></i></th>
+                                    <th>Tags</th>
+                                    <th class="sortable" data-sort="date">Uploaded <i class="fas fa-sort"></i></th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="filesList">
+                                <!-- Files will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="templates" class="dashboard-section" style="display: none;">
+                <h2>Resume Templates</h2>
+                
+                <!-- Template Grid -->
+                <div class="row mt-4" id="templateGrid">
+                    <!-- Templates will be loaded here -->
+                </div>
+
+                <!-- Template Details Modal -->
+                <div class="modal fade" id="templateModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <img class="template-full-image img-fluid mb-3" src="" alt="Template Preview">
+                                        <div class="template-tags mb-3"></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>About this template</h6>
+                                        <p class="template-description"></p>
+                                        <div class="template-author mb-3"></div>
+                                        <div class="d-grid gap-2">
+                                            <button class="btn btn-primary preview-pdf-btn">
+                                                Preview PDF
+                                            </button>
+                                            <button class="btn btn-success use-template-btn">
+                                                Use this Template
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="resumeBuilder" class="dashboard-section" style="display: none;">
+                <h2>Resume Builder</h2>
+                <!-- Resume builder content will go here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/app.js"></script>
+</body>
+</html> 
