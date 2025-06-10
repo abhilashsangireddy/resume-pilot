@@ -434,9 +434,10 @@ function displayTemplates() {
     templateGrid.innerHTML = templatesCache.map(template => `
         <div class="col-md-4 mb-4">
             <div class="template-card card h-100" data-template-id="${template._id}">
-                <img src="${template.thumbnail_image}" 
-                     class="card-img-top template-thumbnail" 
-                     alt="${template.name}">
+                <img src="/api/templates/${template._id}/thumbnail"
+                     class="card-img-top template-thumbnail"
+                     alt="${template.name}"
+                     onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5UaHVtYm5haWw8L3RleHQ+PC9zdmc+'">
                 <div class="card-body">
                     <h5 class="card-title">${template.name}</h5>
                     <p class="card-text">${template.short_description}</p>
@@ -457,17 +458,17 @@ function showTemplateDetails(templateId) {
 
     const modal = document.getElementById('templateModal');
     modal.querySelector('.modal-title').textContent = template.name;
-    modal.querySelector('.template-full-image').src = template.image;
+    modal.querySelector('.template-full-image').src = `/api/templates/${template._id}/thumbnail`;
     modal.querySelector('.template-description').textContent = template.description;
     modal.querySelector('.template-author').innerHTML = `<strong>Created by:</strong> ${template.author}`;
     modal.querySelector('.template-tags').innerHTML = template.tags
-        .map(tag => `<span class="badge bg-secondary me-1">${tag}</span>`)
+        .map(tag => `<span class="badge bg-primary me-1">${tag}</span>`)
         .join('');
 
-    // Handle PDF preview button
-    const previewPdfBtn = modal.querySelector('.preview-pdf-btn');
-    previewPdfBtn.onclick = () => {
-        window.open(`/uploads/${template.preview_pdf_id}`, '_blank');
+    // Update preview button to open PDF
+    const previewBtn = modal.querySelector('.btn-outline-primary') || createPreviewButton(modal);
+    previewBtn.onclick = () => {
+        window.open(`/api/templates/${template._id}/preview`, '_blank');
     };
 
     // Handle use template button
@@ -475,9 +476,19 @@ function showTemplateDetails(templateId) {
     useTemplateBtn.onclick = () => {
         // TODO: Implement template usage logic
         showToast('Template selection coming soon!');
+        templateModal.hide();
     };
 
     templateModal.show();
+}
+
+function createPreviewButton(modal) {
+    const buttonContainer = modal.querySelector('.modal-footer');
+    const previewBtn = document.createElement('button');
+    previewBtn.className = 'btn btn-outline-primary me-2';
+    previewBtn.textContent = 'Preview PDF';
+    buttonContainer.insertBefore(previewBtn, buttonContainer.firstChild);
+    return previewBtn;
 }
 
 // Add download function with auth headers

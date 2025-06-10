@@ -8,14 +8,17 @@ export class Template {
   @Prop({ required: true })
   name: string;
 
-  @Prop({ required: true })
-  thumbnail_image: string;
-
-  @Prop({ required: true })
-  image: string;
+  @Prop({ type: Types.ObjectId, ref: 'File', required: true })
+  thumbnail_image_id: Types.ObjectId;
 
   @Prop({ type: Types.ObjectId, ref: 'File', required: true })
   preview_pdf_id: Types.ObjectId;
+
+  @Prop({ type: Types.ObjectId, ref: 'File', required: true })
+  main_tex_id: Types.ObjectId;
+
+  @Prop({ type: Types.ObjectId, ref: 'File', required: false })
+  main_cls_id?: Types.ObjectId;
 
   @Prop({ required: true })
   author: string;
@@ -29,8 +32,11 @@ export class Template {
   @Prop({ type: [String], default: [] })
   tags: string[];
 
-  @Prop({ required: true, length: 5 })
-  template_path: string;
+  @Prop({ required: true })
+  version: string;
+
+  @Prop({ default: true })
+  is_active: boolean;
 }
 
 export const TemplateSchema = SchemaFactory.createForClass(Template); 

@@ -1,0 +1,128 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Enhanced Professional CV
+% LaTeX Template
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass{resume}
+
+% Enhanced formatting and styling
+\usepackage[left=0.6in,top=0.5in,right=0.6in,bottom=0.5in]{geometry}
+\usepackage{hyperref}
+\usepackage{fontawesome}
+\usepackage{xcolor}
+
+% Custom colors
+\definecolor{linkblue}{RGB}{0,112,201}
+\definecolor{sectioncolor}{RGB}{70,70,70}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    urlcolor=linkblue
+}
+
+\newcommand{\tab}[1]{\hspace{.2667\textwidth}\rlap{#1}}
+\newcommand{\itab}[1]{\hspace{0em}\rlap{#1}}
+\newcommand{\skill}[1]{\textbf{#1}}
+
+% Header Information
+\name{Shikara Repaka}
+\address{Dallas, TX}
+\address{
+    \faPhone\ (+1) 940-493-0827 \textbar\ 
+    \faEnvelope\ \href{mailto:shikararepaka98@gmail.com}{shikararepaka98@gmail.com}
+    }
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	PROFESSIONAL SUMMARY
+%----------------------------------------------------------------------------------------
+
+\begin{rSection}{Professional Summary}
+Resourceful and detail-oriented professional with dual Master's degrees in Information Technology and Information Systems. Strong foundation in data analysis, transaction management, and operational efficiency. Proven success in driving end-to-end project delivery, problem-solving complex data issues, and delivering insights that enhance decision-making. Highly adaptable, process-focused, and committed to delivering seamless operational support across trade and client lifecycles. A confident team collaborator with a passion for risk-aware, high-impact execution in fast-paced environments.
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+%	CORE COMPETENCIES
+%----------------------------------------------------------------------------------------
+
+\begin{rSection}{Core Competencies}
+\begin{tabular}{ @{} >{\bfseries}l @{\hspace{6ex}} l }
+Business & Trade \& Transaction Lifecycle \textbar{} Process Improvement \textbar{} Risk \& Compliance Awareness \\
+Technical & SQL \& Relational Databases \textbar{} Tableau \& Data Visualization \textbar{} Advanced Excel \\
+Soft Skills & Stakeholder Collaboration \textbar{} Analytical Thinking \textbar{} Communication
+\end{tabular}
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+%	EDUCATION
+%----------------------------------------------------------------------------------------
+
+\begin{rSection}{Education}
+{\bf Belhaven University} \hfill {\em Expected May 2024} 
+\\ Master of Science in Information Technology Management
+\\ Jackson, Mississippi
+\vspace{0.5em}
+
+{\bf University of North Texas} \hfill {\em May 2023}
+\\ Master of Science in Information Systems and Technology
+\\ Denton, TX
+\vspace{0.5em}
+
+{\bf CVR College Of Engineering} \hfill {\em August 2020}
+\\ Bachelor of Technology in Information Technology
+\\ Hyderabad, India
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+%	PROJECT EXPERIENCE
+%----------------------------------------------------------------------------------------
+
+\begin{rSection}{Project Experience}
+
+\begin{rSubsection}{Database Design and Development}{}{Belhaven University}{}
+\item Designed a scalable, normalized relational database using Microsoft Access for a 200-member church organization
+\item Created an ERD and implemented primary/foreign keys to ensure data integrity across membership, finance, attendance, and events
+\item Wrote advanced SQL queries for transactional reporting and trend analysis, improving financial tracking accuracy by 30\%
+\end{rSubsection}
+
+\begin{rSubsection}{U.S. Accidents Visualization Project}{}{University of North Texas}{}
+\item Analyzed national accident trends using Kaggle datasets to identify high-risk zones and time periods
+\item Delivered a multi-dashboard Tableau solution with advanced visuals (dual-axis charts, heat maps) and actionable insights
+\item Results used to support data-driven policy for public safety improvements
+\end{rSubsection}
+
+\begin{rSubsection}{Soci-Rank News Classification System}{}{CVR College of Engineering}{}
+\item Developed a hybrid news ranking system integrating traditional and social media data using Java and MySQL
+\item Applied custom algorithms to evaluate content on Media Focus, User Attention, and Interaction
+\item Improved information relevance and visibility by 40\% by filtering noise and prioritizing high-value content
+\end{rSubsection}
+
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+%	LEADERSHIP & EXTRACURRICULARS
+%----------------------------------------------------------------------------------------
+
+\begin{rSection}{Leadership \& Extracurriculars}
+\textbf{Core Member – IT Department} \hfill 2017 – 2020
+\\ CVR College of Engineering
+\item Spearheaded logistics and planning for three annual technical fests
+\item Hosted major college events, including convocation ceremonies, engaging audiences of over 500+ attendees
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+%	TECHNICAL SKILLS
+%----------------------------------------------------------------------------------------
+
+\begin{rSection}{Technical Skills}
+\begin{tabular}{ @{} >{\bfseries}l @{\hspace{6ex}} l }
+Languages & SQL, Python, C \\
+Data \& Visualization & Microsoft Excel (PivotTables, VLOOKUP, Macros), Tableau, Power BI \\
+Database Systems & Microsoft Access, MySQL \\
+Project Tools & MS Word, PowerPoint, Outlook
+\end{tabular}
+\end{rSection}
+
+\end{document}
