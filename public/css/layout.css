@@ -1,0 +1,111 @@
+/* Authentication Layout */
+.auth-card {
+    min-width: 450px;
+    margin: 2rem auto;
+    padding: 2.5rem;
+    border-radius: 10px;
+}
+
+#auth-container {
+    max-width: 800px;
+    width: 100%;
+    padding: 0 2rem;
+}
+
+/* Vertical Navigation Styles */
+.vertical-nav {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 250px;
+    background-color: var(--primary-color);
+    transition: all 0.3s;
+    z-index: 1000;
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.vertical-nav.collapsed {
+    width: 60px;
+}
+
+.vertical-nav .nav-link {
+    color: var(--text-light);
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+}
+
+.vertical-nav .nav-link:hover {
+    background-color: var(--secondary-color);
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.vertical-nav .nav-link i {
+    width: 20px;
+    text-align: center;
+}
+
+.vertical-nav.collapsed .nav-text {
+    display: none;
+}
+
+/* User Profile in Navigation */
+.user-profile {
+    padding: 1rem 1.5rem;
+    color: var(--text-light);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 1rem;
+}
+
+.nav-bottom {
+    margin-top: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1rem;
+}
+
+/* Navigation Toggle Button */
+.toggle-nav {
+    position: absolute;
+    right: -15px;
+    top: 20px;
+    background: var(--primary-color);
+    border: none;
+    color: var(--text-light);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Main Content Area */
+.main-content {
+    margin-left: 250px;
+    padding: 2rem;
+    transition: all 0.3s;
+}
+
+.main-content.nav-collapsed {
+    margin-left: 60px;
+}
+
+/* Dashboard Sections */
+.dashboard-section {
+    background: white;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.05);
+}
+
+/* Navbar General */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+} 
