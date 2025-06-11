@@ -37,12 +37,15 @@
     "bcrypt": "^6.0.0",
     "mongoose": "^8.15.1",
     "multer": "^2.0.1",
+    "node-latex": "^3.1.0",
+    "openai": "^5.3.0",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
     "pdf-parse": "^1.1.1",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",

@@ -28,7 +28,9 @@ export class FilesService {
     if (file.size > 10 * 1024 * 1024) { // 10MB limit
       throw new BadRequestException('File size exceeds 10MB limit');
     }
-
+    if(file.mimetype !== 'application/pdf') {
+      throw new BadRequestException('File must be a PDF');
+    }
     // Upload file to GridFS
     const uploadStream = this.gridFSBucket.openUploadStream(file.originalname);
     const fileBuffer = file.buffer;
