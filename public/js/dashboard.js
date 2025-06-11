@@ -106,16 +106,30 @@ function setActiveNavLink(activeId) {
 }
 
 function setUserDisplayName() {
-    // You can implement this to show actual user name from token or API
     const userDisplayElement = document.getElementById('userDisplayName');
     if (userDisplayElement) {
-        userDisplayElement.textContent = 'User'; // Default for now
+        // Get user data from localStorage
+        const userData = localStorage.getItem('user');
+        if (userData) {
+            try {
+                const user = JSON.parse(userData);
+                // Display username, or email as fallback, or "User" as final fallback
+                const displayName = user.username || user.email || 'User';
+                userDisplayElement.textContent = displayName;
+                userDisplayElement.title = `Logged in as ${displayName}`;
+            } catch (error) {
+                console.error('Error parsing user data:', error);
+                userDisplayElement.textContent = 'User';
+            }
+        } else {
+            userDisplayElement.textContent = 'User';
+        }
     }
 }
 
 function logout() {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
     location.reload();
 }
 

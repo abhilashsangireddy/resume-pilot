@@ -87,7 +87,7 @@ async function handleFileUpload(e) {
             throw new Error(error.message || 'Upload failed');
         }
 
-        showToast('File uploaded successfully');
+        showToast('File uploaded successfully', 'success');
         uploadForm.reset();
         loadFiles(filterTags ? filterTags.value : '');
     } catch (error) {
@@ -192,8 +192,8 @@ function displayFiles() {
                             <td class="text-muted">${formatFileSize(file.size)}</td>
                             <td>
                                 ${file.tags && file.tags.length > 0 
-                                    ? file.tags.map(tag => `<span class="badge bg-secondary me-1">${escapeHtml(tag)}</span>`).join('')
-                                    : '<span class="text-muted">No tags</span>'
+                                    ? file.tags.map(tag => `<span class="badge bg-primary me-1">${escapeHtml(tag)}</span>`).join('')
+                                    : '<span class="text-muted"><i class="fas fa-tag me-1"></i>No tag</span>'
                                 }
                             </td>
                             <td class="text-muted">${formatDate(file.createdAt)}</td>

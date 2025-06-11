@@ -344,9 +344,19 @@
 }
 
 .card-title {
-    color: #495057;
+    color: var(--primary-color);
     font-weight: 600;
-    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.card-title::before {
+    content: '\f093';
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    color: var(--primary-color);
+    font-size: 1.2em;
 }
 
 /* Enhanced Tables */
@@ -705,4 +715,138 @@
     .nav-tabs .nav-link .badge {
         margin-left: 0.5rem;
     }
+}
+
+/* Enhanced Form Controls */
+.form-label {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
+.form-label .text-muted {
+    font-weight: 400;
+    font-size: 0.9em;
+}
+
+.form-select {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.form-select:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.1rem rgba(0,123,255,0.1);
+}
+
+.form-select option {
+    padding: 0.5rem;
+}
+
+/* File Input Styling */
+.form-control[type="file"] {
+    cursor: pointer;
+    border: 2px dashed #dee2e6;
+    border-radius: 8px;
+    padding: 1rem;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+}
+
+.form-control[type="file"]:hover {
+    border-color: var(--primary-color);
+    background: #e3f2fd;
+}
+
+.form-control[type="file"]:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.15);
+    background: #e3f2fd;
+}
+
+/* Enhanced Tag Display */
+.badge.bg-primary {
+    background: linear-gradient(135deg, var(--primary-color), #0056b3) !important;
+    box-shadow: 0 2px 4px rgba(0,123,255,0.3);
+    font-weight: 500;
+    padding: 0.4rem 0.7rem;
+    border-radius: 15px;
+}
+
+.text-muted i {
+    opacity: 0.7;
+}
+
+/* Button Enhancements */
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), #0056b3);
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,123,255,0.3);
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,123,255,0.4);
+    background: linear-gradient(135deg, #0056b3, var(--primary-color));
+}
+
+.btn-primary:disabled {
+    transform: none;
+    opacity: 0.7;
+}
+
+/* Upload Progress Indicator */
+.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+    border-width: 0.1em;
+}
+
+/* Resume Builder Tab Icons */
+.nav-tabs .nav-link .fa-plus-circle {
+    color: #28a745;
+}
+
+.nav-tabs .nav-link .fa-edit {
+    color: #fd7e14;
+}
+
+.nav-tabs .nav-link.active .fa-plus-circle,
+.nav-tabs .nav-link.active .fa-edit {
+    color: var(--primary-color);
+}
+
+/* Coming Soon Section */
+.text-center.py-5 {
+    padding: 4rem 2rem !important;
+}
+
+.text-center.py-5 .fa-tools {
+    background: linear-gradient(135deg, #6c757d, #495057);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    opacity: 0.7;
+}
+
+/* Enhanced Tab Content */
+.tab-content .tab-pane {
+    min-height: 400px;
+}
+
+/* Resume Builder Specific Enhancements */
+#resume-builder-tabs .nav-link {
+    font-weight: 500;
+    padding: 1rem 1.5rem;
+}
+
+#resume-builder-tabs .nav-link i {
+    font-size: 1.1em;
+}
+
+#resume-builder-tabs .nav-link:hover i {
+    transform: scale(1.1);
+    transition: transform 0.2s ease;
 } 
