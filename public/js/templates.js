@@ -71,12 +71,8 @@ function showTemplateDetails(templateId) {
         .map(tag => `<span class="badge bg-primary me-1">${tag}</span>`)
         .join('');
 
-    // Update preview button to open PDF
-    let previewBtn = modal.querySelector('.btn-outline-primary');
-    if (!previewBtn) {
-        previewBtn = createPreviewButton(modal);
-    }
-    
+    // Use the existing hardcoded preview button
+    const previewBtn = modal.querySelector('.preview-pdf-btn');
     if (previewBtn) {
         previewBtn.onclick = () => {
             window.open(`/api/templates/${template._id}/preview`, '_blank');
@@ -94,35 +90,4 @@ function showTemplateDetails(templateId) {
     }
 
     templateModal.show();
-}
-
-// Create preview button if it doesn't exist
-function createPreviewButton(modal) {
-    let buttonContainer = modal.querySelector('.modal-footer');
-    
-    // If no modal-footer exists, create one
-    if (!buttonContainer) {
-        const modalContent = modal.querySelector('.modal-content');
-        if (modalContent) {
-            buttonContainer = document.createElement('div');
-            buttonContainer.className = 'modal-footer';
-            modalContent.appendChild(buttonContainer);
-        } else {
-            // If we can't find modal-content, return null and handle gracefully
-            console.warn('Could not find modal structure to add preview button');
-            return null;
-        }
-    }
-    
-    const previewBtn = document.createElement('button');
-    previewBtn.className = 'btn btn-outline-primary me-2';
-    previewBtn.textContent = 'Preview PDF';
-    
-    if (buttonContainer.firstChild) {
-        buttonContainer.insertBefore(previewBtn, buttonContainer.firstChild);
-    } else {
-        buttonContainer.appendChild(previewBtn);
-    }
-    
-    return previewBtn;
 } 

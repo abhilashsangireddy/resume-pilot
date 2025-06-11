@@ -182,4 +182,69 @@
     font-size: 3rem;
     margin-bottom: 1rem;
     opacity: 0.5;
+}
+
+/* Resume Builder Styles */
+.preview-window {
+    min-height: 600px;
+    position: relative;
+    background-color: #f8f9fa;
+}
+
+.preview-state {
+    display: none;
+    height: 100%;
+    min-height: 600px;
+}
+
+.preview-state.active {
+    display: block;
+}
+
+.document-viewer, .generated-viewer {
+    height: 600px;
+    background: white;
+}
+
+.processing-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 600px;
+    padding: 2rem;
+}
+
+.processing-state .text-center {
+    max-width: 400px;
+}
+
+.progress {
+    height: 8px;
+    margin-top: 1rem;
+}
+
+.preview-controls {
+    gap: 0.5rem;
+}
+
+/* Form Enhancements */
+.text-danger {
+    color: #dc3545 !important;
+}
+
+.form-text {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-top: 0.25rem;
+}
+
+/* Card Header Enhancements */
+.card-header {
+    background-color: rgba(44, 62, 80, 0.05);
+    border-bottom: 1px solid #dee2e6;
+}
+
+.card-header h5 {
+    color: var(--primary-color);
+    font-weight: 600;
 } 

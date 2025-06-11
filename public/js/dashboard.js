@@ -1,6 +1,7 @@
 import { updateActiveLink } from './utils.js';
 import { initFiles } from './files.js';
 import { initTemplates } from './templates.js';
+import { initResumeBuilder } from './resumeBuilder.js';
 
 // DOM Elements
 const myFilesLink = document.getElementById('myFilesLink');
@@ -90,5 +91,5 @@ function showResumeBuilder() {
     if (templates) templates.style.display = 'none';
     if (resumeBuilder) resumeBuilder.style.display = 'block';
     if (resumeBuilderLink) updateActiveLink(resumeBuilderLink);
-    // TODO: Initialize resume builder when implemented
+    initResumeBuilder(); // Initialize resume builder when section is shown
 } 

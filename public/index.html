@@ -246,7 +246,114 @@
 
             <div id="resumeBuilder" class="dashboard-section" style="display: none;">
                 <h2>Resume Builder</h2>
-                <!-- Resume builder content will go here -->
+                
+                <!-- Resume Builder Form -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Build Your Resume</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="resumeBuilderForm">
+                            <div class="row">
+                                <!-- Template Selection -->
+                                <div class="col-md-4 mb-3">
+                                    <label for="templateSelect" class="form-label">Template to use <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="templateSelect" required>
+                                        <option value="">Select a template...</option>
+                                        <!-- Templates will be loaded here -->
+                                    </select>
+                                </div>
+                                
+                                <!-- Document Selection -->
+                                <div class="col-md-4 mb-3">
+                                    <label for="documentSelect" class="form-label">Document to use <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="documentSelect" required>
+                                        <option value="">Select a document...</option>
+                                        <!-- User files will be loaded here -->
+                                    </select>
+                                </div>
+                                
+                                <!-- Submit Button -->
+                                <div class="col-md-4 mb-3 d-flex align-items-end">
+                                    <button type="submit" class="btn btn-primary w-100" id="generateResumeBtn">
+                                        <i class="fas fa-magic me-2"></i>
+                                        Generate Resume
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- LLM Instructions -->
+                            <div class="mb-3">
+                                <label for="llmInstructions" class="form-label">Additional instructions to the LLM <span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="llmInstructions" rows="4" 
+                                          placeholder="Provide specific instructions for how you want your resume to be customized. For example: 'Focus on technical skills and software development experience. Emphasize leadership roles and quantify achievements where possible.'" 
+                                          required></textarea>
+                                <div class="form-text">Be specific about what you want to emphasize, hide, or modify in your resume.</div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Preview Window -->
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Preview</h5>
+                        <div class="preview-controls" style="display: none;">
+                            <button class="btn btn-sm btn-outline-primary me-2" id="downloadGeneratedBtn">
+                                <i class="fas fa-download me-1"></i>
+                                Download
+                            </button>
+                            <button class="btn btn-sm btn-outline-secondary" id="saveToFilesBtn">
+                                <i class="fas fa-save me-1"></i>
+                                Save to My Files
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="previewWindow" class="preview-window">
+                            <!-- Default State -->
+                            <div id="previewDefault" class="preview-state active">
+                                <div class="empty-state">
+                                    <i class="fas fa-file-alt"></i>
+                                    <h4>Select a document to preview</h4>
+                                    <p class="text-muted">Choose a document from your files to see a preview here</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Document Preview State -->
+                            <div id="previewDocument" class="preview-state">
+                                <div class="document-viewer">
+                                    <embed id="documentEmbed" type="application/pdf" width="100%" height="600px" />
+                                </div>
+                            </div>
+                            
+                            <!-- Processing State -->
+                            <div id="previewProcessing" class="preview-state">
+                                <div class="processing-state">
+                                    <div class="text-center">
+                                        <div class="spinner-border text-primary mb-4" role="status" style="width: 3rem; height: 3rem;">
+                                            <span class="visually-hidden">Processing...</span>
+                                        </div>
+                                        <h4>Generating Your Resume</h4>
+                                        <p class="text-muted mb-4">AI is analyzing your document and customizing the template...</p>
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                                                 role="progressbar" style="width: 0%" id="processingProgress"></div>
+                                        </div>
+                                        <small class="text-muted mt-2 d-block" id="processingStatus">Initializing...</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Generated Resume Preview State -->
+                            <div id="previewGenerated" class="preview-state">
+                                <div class="generated-viewer">
+                                    <embed id="generatedEmbed" type="application/pdf" width="100%" height="600px" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
