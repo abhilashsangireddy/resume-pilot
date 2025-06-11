@@ -1,6 +1,8 @@
-import { initAuth } from './auth.js';
+import './dashboard.js';
+
+// Main entry point - dashboard.js handles all initialization
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', () => {
-    initAuth();
+    // No need to call initAuth again as dashboard.js handles initialization
 }); 

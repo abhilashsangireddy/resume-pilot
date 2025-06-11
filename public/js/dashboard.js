@@ -1,95 +1,123 @@
-import { updateActiveLink } from './utils.js';
+import { initAuth } from './auth.js';
 import { initFiles } from './files.js';
 import { initTemplates } from './templates.js';
 import { initResumeBuilder } from './resumeBuilder.js';
-
-// DOM Elements
-const myFilesLink = document.getElementById('myFilesLink');
-const templatesLink = document.getElementById('templatesLink');
-const resumeBuilderLink = document.getElementById('resumeBuilderLink');
-const myFiles = document.getElementById('myFiles');
-const templates = document.getElementById('templates');
-const resumeBuilder = document.getElementById('resumeBuilder');
-const verticalNav = document.querySelector('.vertical-nav');
-const mainContent = document.querySelector('.main-content');
-const toggleNavBtn = document.querySelector('.toggle-nav');
+import { initGeneratedDocuments } from './generatedDocuments.js';
+import { getAuthToken, showToast } from './utils.js';
 
 // Initialize dashboard
-export function initDashboard() {
-    setupEventListeners();
-    setupInitialView();
-}
-
-// Setup event listeners
-function setupEventListeners() {
-    // Toggle navigation
-    if (toggleNavBtn) {
-        toggleNavBtn.addEventListener('click', () => {
-            verticalNav.classList.toggle('collapsed');
-            mainContent.classList.toggle('nav-collapsed');
-            toggleNavBtn.querySelector('i').classList.toggle('fa-chevron-right');
-            toggleNavBtn.querySelector('i').classList.toggle('fa-chevron-left');
-        });
+document.addEventListener('DOMContentLoaded', function() {
+    initAuth();
+    
+    // Check if user is already logged in
+    const token = getAuthToken();
+    if (token) {
+        showDashboard();
     }
+});
 
-    // Navigation links
-    if (myFilesLink) {
-        myFilesLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            showMyFiles();
-        });
-    }
-
-    if (templatesLink) {
-        templatesLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            showTemplates();
-        });
-    }
-
-    if (resumeBuilderLink) {
-        resumeBuilderLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            showResumeBuilder();
-        });
-    }
-}
-
-// Setup initial dashboard view
-function setupInitialView() {
-    // Load initial dashboard section - My Files
-    if (myFiles) {
-        myFiles.style.display = 'block';
-        if (templates) templates.style.display = 'none';
-        if (resumeBuilder) resumeBuilder.style.display = 'none';
-        if (myFilesLink) updateActiveLink(myFilesLink);
-        initFiles(); // Load files when dashboard is shown
-    }
-}
-
-// Show My Files section
-function showMyFiles() {
-    if (myFiles) myFiles.style.display = 'block';
-    if (templates) templates.style.display = 'none';
-    if (resumeBuilder) resumeBuilder.style.display = 'none';
-    if (myFilesLink) updateActiveLink(myFilesLink);
+function showDashboard() {
+    document.getElementById('auth-container').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    
+    // Initialize all modules
     initFiles();
+    initTemplates();
+    initResumeBuilder();
+    initGeneratedDocuments();
+    
+    // Set up navigation
+    setupNavigation();
+    
+    // Show default section (My Files)
+    showMyFiles();
+    
+    // Set user display name
+    setUserDisplayName();
 }
 
-// Show Templates section
+function setupNavigation() {
+    document.getElementById('myFilesLink').addEventListener('click', (e) => {
+        e.preventDefault();
+        showMyFiles();
+    });
+    
+    document.getElementById('templatesLink').addEventListener('click', (e) => {
+        e.preventDefault();
+        showTemplates();
+    });
+    
+    document.getElementById('resumeBuilderLink').addEventListener('click', (e) => {
+        e.preventDefault();
+        showResumeBuilder();
+    });
+    
+    // Navigation toggle
+    const toggleBtn = document.querySelector('.toggle-nav');
+    const nav = document.querySelector('.vertical-nav');
+    
+    if (toggleBtn && nav) {
+        toggleBtn.addEventListener('click', () => {
+            nav.classList.toggle('collapsed');
+        });
+    }
+    
+    // Logout functionality
+    document.getElementById('logoutBtn').addEventListener('click', (e) => {
+        e.preventDefault();
+        logout();
+    });
+}
+
+function showMyFiles() {
+    hideAllSections();
+    document.getElementById('files-section').style.display = 'block';
+    setActiveNavLink('myFilesLink');
+}
+
 function showTemplates() {
-    if (myFiles) myFiles.style.display = 'none';
-    if (templates) templates.style.display = 'block';
-    if (resumeBuilder) resumeBuilder.style.display = 'none';
-    if (templatesLink) updateActiveLink(templatesLink);
-    initTemplates(); // Load templates when section is shown
+    hideAllSections();
+    document.getElementById('templates').style.display = 'block';
+    setActiveNavLink('templatesLink');
 }
 
-// Show Resume Builder section
 function showResumeBuilder() {
-    if (myFiles) myFiles.style.display = 'none';
-    if (templates) templates.style.display = 'none';
-    if (resumeBuilder) resumeBuilder.style.display = 'block';
-    if (resumeBuilderLink) updateActiveLink(resumeBuilderLink);
-    initResumeBuilder(); // Initialize resume builder when section is shown
-} 
+    hideAllSections();
+    document.getElementById('resumeBuilder').style.display = 'block';
+    setActiveNavLink('resumeBuilderLink');
+    initResumeBuilder();
+}
+
+function hideAllSections() {
+    const sections = document.querySelectorAll('.content-section, .dashboard-section');
+    sections.forEach(section => {
+        section.style.display = 'none';
+    });
+}
+
+function setActiveNavLink(activeId) {
+    // Remove active class from all nav links
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+    });
+    
+    // Add active class to clicked link
+    document.getElementById(activeId).classList.add('active');
+}
+
+function setUserDisplayName() {
+    // You can implement this to show actual user name from token or API
+    const userDisplayElement = document.getElementById('userDisplayName');
+    if (userDisplayElement) {
+        userDisplayElement.textContent = 'User'; // Default for now
+    }
+}
+
+function logout() {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('refreshToken');
+    location.reload();
+}
+
+// Export functions that might be needed by other modules
+window.showDashboard = showDashboard; 

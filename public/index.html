@@ -124,80 +124,134 @@
 
         <!-- Main Content -->
         <div class="main-content">
-            <div id="myFiles" class="dashboard-section">
-                <h2>My Files</h2>
-                
-                <!-- Upload Section - Full Width -->
-                <div class="card p-3 mb-4">
-                    <form id="uploadForm" class="row g-3 align-items-end">
-                        <div class="col-md-6">
-                            <label for="fileInput" class="form-label">Upload File (Max 10MB)</label>
-                            <input type="file" class="form-control" id="fileInput" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="fileTags" class="form-label">Tag (Optional)</label>
-                            <select class="form-select" id="fileTags">
-                                <option value="">Select a tag</option>
-                                <option value="resume">Resume</option>
-                                <option value="cover-letter">Cover Letter</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <div class="col-md-2">
-                            <button type="submit" class="btn btn-primary w-100">
-                                <span class="upload-text">Upload</span>
-                                <div class="upload-progress d-none">
-                                    <div class="spinner-border spinner-border-sm" role="status">
-                                        <span class="visually-hidden">Loading...</span>
+            <!-- My Files Section -->
+            <div id="files-section" class="content-section" style="display: none;">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2>My Files</h2>
+                </div>
+
+                <!-- File Tabs -->
+                <ul class="nav nav-tabs mb-4" id="file-tabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="uploaded-tab" data-bs-toggle="tab" data-bs-target="#uploaded-content" type="button" role="tab">
+                            <i class="fas fa-cloud-upload-alt me-2"></i>
+                            <span>Uploaded Files</span>
+                            <span class="badge bg-light text-dark ms-2" id="uploaded-count">0</span>
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="generated-tab" data-bs-toggle="tab" data-bs-target="#generated-content" type="button" role="tab">
+                            <i class="fas fa-magic me-2"></i>
+                            <span>Generated Documents</span>
+                            <span class="badge bg-light text-dark ms-2" id="generated-count">0</span>
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- Tab Content -->
+                <div class="tab-content" id="file-tab-content">
+                    <!-- Uploaded Files Tab -->
+                    <div class="tab-pane fade show active" id="uploaded-content" role="tabpanel">
+                        <!-- File Upload Form -->
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Upload New File</h5>
+                                <form id="upload-form" enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="file-input" class="form-label">Select File</label>
+                                                <input type="file" class="form-control" id="file-input" name="file" accept=".pdf,.doc,.docx" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="tags-select" class="form-label">Tags</label>
+                                                <select class="form-select" id="tags-select" name="tags" multiple>
+                                                    <option value="resume">Resume</option>
+                                                    <option value="cover-letter">Cover Letter</option>
+                                                    <option value="transcript">Transcript</option>
+                                                    <option value="certificate">Certificate</option>
+                                                    <option value="portfolio">Portfolio</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <span class="progress-text ms-2">0%</span>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-upload me-2"></i>Upload File
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Search and Filter -->
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-search"></i>
+                                            </span>
+                                            <input type="text" class="form-control" id="file-search" placeholder="Search files...">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select class="form-select" id="tag-filter">
+                                            <option value="">All Tags</option>
+                                            <option value="resume">Resume</option>
+                                            <option value="cover-letter">Cover Letter</option>
+                                            <option value="transcript">Transcript</option>
+                                            <option value="certificate">Certificate</option>
+                                            <option value="portfolio">Portfolio</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </button>
+                            </div>
                         </div>
-                    </form>
-                </div>
 
-                <!-- Horizontal Divider -->
-                <hr class="mb-4">
-
-                <!-- Search and Filter Section -->
-                <div class="row mb-4">
-                    <div class="col-md-8">
-                        <div class="search-box">
-                            <label for="searchInput" class="form-label">Search Files</label>
-                            <input type="text" class="form-control" id="searchInput" placeholder="Search by filename...">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="filter-box">
-                            <label for="filterTags" class="form-label">Filter by Tag</label>
-                            <select class="form-select" id="filterTags">
-                                <option value="">All Files</option>
-                                <option value="resume">Resume</option>
-                                <option value="cover-letter">Cover Letter</option>
-                                <option value="other">Other</option>
-                            </select>
+                        <!-- Files List -->
+                        <div class="card">
+                            <div class="card-body">
+                                <div id="files-list">
+                                    <div class="text-center">
+                                        <div class="spinner-border" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                        <p class="mt-2">Loading files...</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Files List -->
-                <div class="files-list">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th class="sortable" data-sort="name">File Name <i class="fas fa-sort"></i></th>
-                                    <th class="sortable" data-sort="size">Size <i class="fas fa-sort"></i></th>
-                                    <th>Tags</th>
-                                    <th class="sortable" data-sort="date">Uploaded <i class="fas fa-sort"></i></th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="filesList">
-                                <!-- Files will be loaded here -->
-                            </tbody>
-                        </table>
+                    <!-- Generated Documents Tab -->
+                    <div class="tab-pane fade" id="generated-content" role="tabpanel">
+                        <!-- Search Bar -->
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-search"></i>
+                                    </span>
+                                    <input type="text" class="form-control" id="generated-search" placeholder="Search generated documents...">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Generated Documents List -->
+                        <div class="card">
+                            <div class="card-body">
+                                <div id="generated-documents-list">
+                                    <div class="text-center">
+                                        <div class="spinner-border" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                        <p class="mt-2">Loading generated documents...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

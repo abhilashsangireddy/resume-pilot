@@ -142,10 +142,10 @@ export function showDashboard(user) {
             userDisplayName.textContent = user.username;
         }
         
-        // Import and initialize dashboard
-        import('./dashboard.js').then(module => {
-            module.initDashboard();
-        });
+        // Show dashboard
+        if (window.showDashboard) {
+            window.showDashboard();
+        }
     }
 }
 

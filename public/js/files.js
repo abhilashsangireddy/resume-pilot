@@ -1,12 +1,12 @@
 import { showToast, formatFileSize, formatDate, getAuthToken } from './utils.js';
 
 // DOM Elements
-const uploadForm = document.getElementById('uploadForm');
-const fileInput = document.getElementById('fileInput');
-const fileTags = document.getElementById('fileTags');
-const filterTags = document.getElementById('filterTags');
-const searchInput = document.getElementById('searchInput');
-const filesList = document.getElementById('filesList');
+const uploadForm = document.getElementById('upload-form');
+const fileInput = document.getElementById('file-input');
+const fileTags = document.getElementById('tags-select');
+const filterTags = document.getElementById('tag-filter');
+const searchInput = document.getElementById('file-search');
+const filesList = document.getElementById('files-list');
 
 // State
 let currentSort = { field: 'date', direction: 'desc' };
@@ -38,20 +38,6 @@ function setupEventListeners() {
             displayFiles();
         });
     }
-
-    // Handle sorting
-    document.querySelectorAll('.sortable').forEach(th => {
-        th.addEventListener('click', () => {
-            const field = th.dataset.sort;
-            if (field === currentSort.field) {
-                currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
-            } else {
-                currentSort.field = field;
-                currentSort.direction = 'asc';
-            }
-            displayFiles();
-        });
-    });
 }
 
 // Handle file upload with progress
@@ -163,43 +149,103 @@ function displayFiles() {
         return currentSort.direction === 'asc' ? compareValue : -compareValue;
     });
 
-    // Update table
-    filesList.innerHTML = files.map(file => `
-        <tr>
-            <td>${file.originalName}</td>
-            <td class="file-size">${formatFileSize(file.size)}</td>
-            <td>
-                ${file.tags.length > 0 
-                    ? `<span class="badge bg-secondary tag-badge">${file.tags[0]}</span>`
-                    : '<span class="text-muted">No tag</span>'
-                }
-            </td>
-            <td class="file-date">${formatDate(file.createdAt)}</td>
-            <td>
-                <div class="file-actions">
-                    <button class="btn btn-sm btn-outline-primary btn-icon" 
-                            onclick="window.downloadFile('${file._id}', '${file.originalName}')"
-                            title="Download">
-                        <i class="fas fa-download"></i>
-                    </button>
-                    <button class="btn btn-sm btn-outline-danger btn-icon" 
-                            onclick="window.deleteFile('${file._id}')"
-                            title="Delete">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            </td>
-        </tr>
-    `).join('');
+    // Update count badge
+    const countBadge = document.getElementById('uploaded-count');
+    if (countBadge) {
+        countBadge.textContent = filesCache.length;
+    }
 
-    // Update sort indicators
+    // Check if files array is empty
+    if (files.length === 0) {
+        filesList.innerHTML = `
+            <div class="text-center py-4">
+                <i class="fas fa-folder-open fa-3x text-muted mb-3"></i>
+                <h5 class="text-muted">No files found</h5>
+                <p class="text-muted">${filesCache.length === 0 ? 'Upload your first file to get started!' : 'No files match your search criteria.'}</p>
+            </div>
+        `;
+        return;
+    }
+
+    // Update files list with table structure
+    const tableHTML = `
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th class="sortable" data-sort="name">File Name <i class="fas fa-sort"></i></th>
+                        <th class="sortable" data-sort="size">Size <i class="fas fa-sort"></i></th>
+                        <th>Tags</th>
+                        <th class="sortable" data-sort="date">Uploaded <i class="fas fa-sort"></i></th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${files.map(file => `
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-file-pdf text-danger me-2"></i>
+                                    <span class="fw-medium">${escapeHtml(file.originalName)}</span>
+                                </div>
+                            </td>
+                            <td class="text-muted">${formatFileSize(file.size)}</td>
+                            <td>
+                                ${file.tags && file.tags.length > 0 
+                                    ? file.tags.map(tag => `<span class="badge bg-secondary me-1">${escapeHtml(tag)}</span>`).join('')
+                                    : '<span class="text-muted">No tags</span>'
+                                }
+                            </td>
+                            <td class="text-muted">${formatDate(file.createdAt)}</td>
+                            <td>
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <button type="button" class="btn btn-outline-primary" 
+                                            onclick="window.downloadFile('${file._id}', '${escapeHtml(file.originalName)}')"
+                                            title="Download">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-danger" 
+                                            onclick="window.deleteFile('${file._id}')"
+                                            title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        </div>
+    `;
+    
+    filesList.innerHTML = tableHTML;
+
+    // Re-setup sorting event listeners for new elements
     document.querySelectorAll('.sortable').forEach(th => {
         th.classList.remove('asc', 'desc');
         const sortField = th.dataset.sort;
         if (sortField === currentSort.field) {
             th.classList.add(currentSort.direction);
         }
+        
+        // Re-add click listener
+        th.addEventListener('click', () => {
+            const field = th.dataset.sort;
+            if (field === currentSort.field) {
+                currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSort.field = field;
+                currentSort.direction = 'asc';
+            }
+            displayFiles();
+        });
     });
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
 }
 
 // Download file

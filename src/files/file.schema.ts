@@ -21,6 +21,9 @@ export class File {
   @Prop({ type: [String], default: [] })
   tags: string[];
 
+  @Prop({ type: Boolean, default: false })
+  systemGen: boolean;
+
   @Prop({ type: Types.ObjectId, ref: 'User', required: false })
   userId?: Types.ObjectId;
 }
